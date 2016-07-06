@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+	</head>
+	<style type="text/css">
+		*{margin: 0;padding: 0;list-style: none;font-family: "微软雅黑";}
+		.mui-table-view li{float: left;background: none;width: 94%;margin-left: 3%;padding-top: 10px;padding-bottom: 10px;
+		background: #fff;border-radius: 10px;margin-top: 5px;}
+		.mui-table-view li h1{width: 33%;float: left;font-size: 18px;color: #717171;text-align: center;}
+		.mui-table-view li h2{width: 33%;float: left;font-size: 18px;color: #ff6500;text-align: center;}
+		.mui-table-view li h2 strong{font-size: 12px;color: red;}
+		.mui-table-view li h3{width: 33%;float: left;font-size: 18px;color: #717171;text-align: center;}
+		.mui-table-view li h4{width: 33%;float: left;font-size: 12px;color: #a1a1a1;text-align: center;}
+		.mui-table-view li h5{width: 33%;float: left;font-size: 12px;color: #5eadf9;text-align: center;}
+		
+		#pullrefresh .mui-table-view{border: none;}
+	</style>
+	<body>
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<ul class="mui-table-view mui-table-view-chevron">
+					
+				</ul>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = table.getElementsByTagName("li")
+					for (var i = cells.length, len = i + 3; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = '';
+						li.innerHTML = '<h1>密度845</h1><h2>4800<strong> ↑50</strong></h2><h3>9.7</h3>'+
+						'<h4>东明石化</h4><h4>自提价4200</h4><h5>查看详情</h5>'						
+						//下拉刷新，新纪录插到最前面；
+						table.insertBefore(li, table.firstChild);
+					}
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			}
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = table.getElementsByTagName("li")
+					for (var i = cells.length, len = i + 20; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = '';
+						li.innerHTML = '<h1>密度845</h1><h2>4800<strong> ↑50</strong></h2><h3>9.7</h3>'+
+						'<h4>东明石化</h4><h4>自提价4200</h4><h5>查看详情</h5>'
+						table.appendChild(li);
+					}
+				}, 1500);
+			}
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+		</script>
+	</body>
+
+</html>
