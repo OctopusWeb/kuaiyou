@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+	</head>
+	<style type="text/css">
+		*{margin: 0;padding: 0;list-style: none;font-family: "微软雅黑";font-weight: 500;}
+		.content{height: 150px;width: 100%;overflow: hidden;position: relative;}
+		.content img{width: 100%;}
+		.content .mui-slider-group{height: 150px;}
+		.content .mui-slider-item{height: 150px;}
+		.content p{width: 100%;background: rgba(0,0,0,0.5);position: absolute;line-height: 24px;text-align: center;
+		color: #fff;bottom: -10px;}
+		
+		.news_hot{width: 100%;height:110px;background: #fff;position: relative;border-bottom: 1px #ccc solid;}
+		.news_hot .img_box{height: 90px;width:120px;float: left;margin: 10px;overflow: hidden;text-align: center;}
+		.news_hot .img_box img{height: 100%;margin-left: -30px;}
+		.news_hot h1{width: 100%;position: absolute;font-size: 16px;padding-left: 140px;line-height: 16px;padding-right: 10px;top: 5px;}
+		.news_hot h1 strong{color: red;font-size: 12px;}
+		.news_hot p{width: 100%;padding-left: 140px;position: absolute;bottom: 0;font-size: 12px;color: #555555;}
+		.news_hot span{width: 100%;position: absolute;bottom:10px;text-align: right;left: 0;font-size: 12px;color: #555555;padding-right: 10px;}
+		
+		.news_hot1{height: 130px;}
+		.news_hot1 h1{float: left;width: 100%;padding-left: 15px;}
+		.news_hot1 p{padding:0 ;bottom: -5px;padding-left: 10px;}
+		.news_hot1 span{bottom: 5px;}
+		.img_box1{height: 90px;width:100%;float: left;overflow: hidden;text-align: center;padding: 10px;top: 20px;margin-top: 20px;}
+		.img_box1 img {width: 33%;padding: 5px;}
+		
+		.mui-table-view .mui-table-view-cell{padding: 5px;}
+		.mui-table-view-cell h1{width: 100%;float: left;font-size: 16px;padding-left: 10px;line-height: 20px;}
+		.mui-table-view-cell p{float:left;font-size: 14px;padding-left: 10px;color: #555555;}	
+		.mui-table-view-cell span{float:right;font-size: 14px;color: #555555;}	
+	</style>
+	<body>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<div class="content">
+					<div class="mui-slider">
+					  <div class="mui-slider-group mui-slider-loop">
+		    			<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="img/04.jpg" /></a><p>希望世界和平永无战争</p></div>
+					    <div class="mui-slider-item"><a href="#"><img src="img/01.jpg" /></a><p>希望世界和平永无战争</p></div>
+					    <div class="mui-slider-item"><a href="#"><img src="img/02.jpg" /></a><p>希望世界和平永无战争</p></div>
+					    <div class="mui-slider-item"><a href="#"><img src="img/03.jpg" /></a><p>希望世界和平永无战争</p></div>
+					    <div class="mui-slider-item"><a href="#"><img src="img/04.jpg" /></a><p>希望世界和平永无战争</p></div>
+		    			<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="img/01.jpg" /></a><p>希望世界和平永无战争</p></a></div>
+					  </div>
+					</div>
+				</div>
+				<div class="news_hot">
+					<div class="img_box"><img src="img/01.jpg" alt="" /></div>
+					<h1>习近平七一讲话五大重点 <strong>热门</strong></h1>
+					<p>凤凰新闻</p><span>阅读：1461  4分钟前</span>
+				</div>
+				<div class="news_hot">
+					<div class="img_box"><img src="img/01.jpg" alt="" /></div>
+					<h1>习近平七一讲话五大重点 <strong>热门</strong></h1>
+					<p>凤凰新闻</p><span>阅读：1461  4分钟前</span>
+				</div>
+				<div class="news_hot news_hot1">
+					<h1>习近平七一讲话五大重点 <strong>热门</strong></h1>
+					<div class="img_box1"><img src="img/01.jpg" alt="" /><img src="img/01.jpg" alt="" /><img src="img/01.jpg" alt="" /></div>
+					<p>凤凰新闻</p><span>阅读：1461  4分钟前</span>
+				</div>
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">
+						<h1>习近平七一讲话五大重点习近平七一讲话五大重点 </h1>
+						<p>凤凰新闻</p><span>阅读：1461  4分钟前</span>
+					</li>
+				</ul>
+			</div>
+		</div> 
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+			  interval:5000//自动轮播周期，若为0则不自动播放，默认为0；
+			});
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					for (var i = cells.length, len = i + 20; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						li.innerHTML = '<h1>习近平七一讲话五大重点习近平七一讲话五大重点 </h1><p>凤凰新闻</p><span>阅读：1461  4分钟前</span>';
+						table.appendChild(li);
+					}
+				}, 1500);
+			}
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+		</script>
+	</body>
+
+</html>
